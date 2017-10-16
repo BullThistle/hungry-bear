@@ -4,46 +4,34 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var bear = exports.bear = {
+  foodLevel: 10,
+  setHunger: function setHunger() {
+    var _this = this;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HungryBear = exports.HungryBear = function () {
-  function HungryBear(name) {
-    _classCallCheck(this, HungryBear);
-
-    this.name = name;
-    this.foodLevel = 10;
-  }
-
-  _createClass(HungryBear, [{
-    key: "setHunger",
-    value: function setHunger() {
-      var _this = this;
-
-      setInterval(function () {
-        _this.foodLevel--;
-      }, 1000);
-    }
-  }, {
-    key: "didYouGetEaten",
-    value: function didYouGetEaten() {
-      if (this.foodLevel > 0) {
-        return false;
-      } else {
-        return true;
+    var hungerInterval = setInterval(function () {
+      _this.foodLevel--;
+      if (_this.didYouGetEaten() == true) {
+        clearInterval(hungerInterval);
+        return "You got eaten!";
       }
+    }, 1000);
+  },
+  didYouGetEaten: function didYouGetEaten() {
+    if (this.foodLevel > 0) {
+      return false;
+    } else {
+      return true;
     }
-  }, {
-    key: "feed",
-    value: function feed() {
-      this.foodLevel = 10;
-    }
-  }]);
-
-  return HungryBear;
-}();
+  },
+  feed: function feed(amount) {
+    var that = this;
+    return function (food) {
+      that.foodLevel += amount;
+      return "The bear ate the " + food + "! Food level goes up " + amount + "!";
+    };
+  }
+};
 
 },{}],2:[function(require,module,exports){
 'use strict';
